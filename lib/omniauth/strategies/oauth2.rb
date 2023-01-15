@@ -106,10 +106,6 @@ module OmniAuth
         return {} unless options.pkce
 
         options.pkce_verifier = SecureRandom.hex(64)
-        
-        p '*' *50
-        p options.pkce_verifier 
-        p '*' *50
 
         # NOTE: see https://tools.ietf.org/html/rfc7636#appendix-A
         {
