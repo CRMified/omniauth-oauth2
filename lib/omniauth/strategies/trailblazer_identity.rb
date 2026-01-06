@@ -54,7 +54,7 @@ module OmniAuth
         full_host + script_name + callback_path
       end
 
-      # Override setup_phase to load dynamic configuration from IdentityProvidersApp
+      # Override setup_phase to load dynamic configuration from IdentityProviderApp
       def setup_phase
         if provider_config
           # Override client options with database configuration
@@ -79,9 +79,10 @@ module OmniAuth
       def provider_config
         return @provider_config if defined?(@provider_config)
 
-        # Try to find provider config from database if Team model exists
-        if defined?(Team) && Team.respond_to?(:default_team)
-          @provider_config = Team.default_team&.identity_providers_apps&.active&.find_by(name: "trailblazer_identity")
+        # Try to find provider config from active channel content security
+        if defined?(Team) && Team.respond_to?(:active_channel_content_security)
+          channel_security = Team.active_channel_content_security
+          @provider_config = channel_security&.identity_provider_app
         else
           @provider_config = nil
         end
